@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Petualangan Pythagoras — E-Book Interaktif</title>
+<style>
+:root{--navy:#18344f;--blue:#32708f;--sky:#e9f5f8;--cream:#fff9ed;--yellow:#f6d46b;--coral:#e88772;--green:#dff2e6;--ink:#243746;--muted:#607584;--white:#fff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:ui-rounded,"Segoe UI",Arial,sans-serif;background:linear-gradient(135deg,#eaf5f7,#fff8ed);color:var(--ink);line-height:1.6}
+header{background:var(--navy);color:white;padding:16px 5vw;display:flex;align-items:center;justify-content:space-between;gap:14px;position:sticky;top:0;z-index:10;box-shadow:0 4px 18px #18344f22}
+.brand{font-weight:800;letter-spacing:.3px}.brand span{color:var(--yellow)}.topscore{background:#ffffff1c;border:1px solid #ffffff50;border-radius:999px;padding:7px 13px;font-size:.9rem;white-space:nowrap}
+.layout{display:grid;grid-template-columns:245px minmax(0,1fr);gap:24px;max-width:1250px;margin:26px auto;padding:0 18px}
+nav{position:sticky;top:88px;align-self:start;background:white;border:1px solid #dce8ed;border-radius:20px;padding:16px;box-shadow:0 8px 24px #18344f0d}
+nav h3{margin:4px 8px 10px;color:var(--navy)}nav button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;margin:3px 0;border-radius:11px;color:var(--ink);font-weight:650;cursor:pointer}nav button:hover,nav button.active{background:var(--sky);color:var(--blue)}nav .tiny{font-size:.82rem;color:var(--muted);padding:8px}
+main{min-width:0}.page{display:none;background:#ffffffed;border:1px solid #dce8ed;border-radius:24px;padding:clamp(20px,4vw,42px);box-shadow:0 12px 36px #18344f0b;min-height:620px;animation:fade .35s ease}.page.active{display:block}
+@keyframes fade{from{opacity:.25;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{color:var(--blue);font-weight:800;text-transform:uppercase;letter-spacing:1.5px;font-size:.78rem}
+h1,h2,h3{color:var(--navy);line-height:1.2}h1{font-size:clamp(2.3rem,5vw,4.6rem);margin:10px 0}h2{font-size:clamp(1.7rem,3vw,2.4rem);margin-top:8px}h3{margin-bottom:8px}.lead{font-size:1.12rem;color:#425a6b;max-width:720px}
+.hero{background:linear-gradient(135deg,#e7f5f8,#fff4d9);border-radius:22px;padding:clamp(22px,5vw,50px);position:relative;overflow:hidden}.hero:after{content:"△";position:absolute;font-size:14rem;right:4%;top:-22%;color:#32708f13;transform:rotate(13deg);pointer-events:none}
+.pill{display:inline-block;padding:5px 11px;border-radius:999px;background:var(--green);font-size:.82rem;font-weight:750;color:#246143;margin:4px 4px 4px 0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{background:var(--cream);border:1px solid #f0e5cb;border-radius:17px;padding:18px}.card.blue{background:var(--sky);border-color:#d4e8ef}.card.green{background:var(--green);border-color:#cbe7d6}.callout{border-left:5px solid var(--coral);background:#fff1ec;padding:14px 17px;border-radius:10px;margin:15px 0}.formula{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:850;color:var(--navy);text-align:center;background:var(--sky);border-radius:16px;padding:18px;margin:14px 0}
+button,.btn{font:inherit}.primary,.secondary,.answer,.nav-arrow{cursor:pointer;border-radius:12px;padding:11px 16px;font-weight:750;border:1px solid transparent;transition:.18s}.primary{background:var(--blue);color:white}.primary:hover{background:var(--navy);transform:translateY(-1px)}.secondary,.nav-arrow{background:white;color:var(--blue);border-color:#c8dce5}.secondary:hover,.nav-arrow:hover{background:var(--sky)}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.answer{display:block;text-align:left;width:100%;background:white;border:1px solid #d7e4e9;margin:8px 0;color:var(--ink)}.answer:hover{border-color:var(--blue);background:var(--sky)}.answer.correct{background:#dff2e6;border-color:#55a879}.answer.wrong{background:#fff0eb;border-color:var(--coral)}
+.feedback{padding:12px 14px;border-radius:12px;margin-top:12px;background:var(--sky);display:none}.feedback.show{display:block}.progress{height:9px;background:#e3edf1;border-radius:99px;overflow:hidden;margin:8px 0 18px}.progress div{height:100%;background:var(--coral);width:0;transition:width .3s}
+svg.diagram{width:100%;max-width:560px;display:block;margin:15px auto}.triangle{stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.6s ease forwards}@keyframes draw{to{stroke-dashoffset:0}}.float{animation:float 3s ease-in-out infinite;transform-origin:center}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+label{display:block;font-weight:700;margin:10px 0 5px}input[type=text],input[type=number]{padding:11px;border:1px solid #bfd4dd;border-radius:10px;font:inherit;width:100%;max-width:360px}
+footer{max-width:1200px;margin:0 auto 30px;padding:0 20px;color:var(--muted);font-size:.85rem}
+.small{font-size:.9rem;color:var(--muted)}.score-big{font-size:3rem;font-weight:900;color:var(--blue)}.checkrow{display:flex;gap:10px;align-items:flex-start;margin:10px 0}.checkrow input{margin-top:7px}
+@media(max-width:820px){.layout{grid-template-columns:1fr;margin:14px auto}nav{position:static;display:flex;overflow-x:auto;gap:5px;padding:10px}nav h3,.tiny{display:none}nav button{white-space:nowrap;width:auto;flex:0 0 auto;margin:0}.grid2,.grid3{grid-template-columns:1fr}.page{min-height:0}header{padding:12px 16px}}
+@media print{header,nav,.actions,footer{display:none!important}.layout{display:block;margin:0}.page{display:block!important;box-shadow:none;page-break-after:always;border:0}.page:not(.active){display:block!important}}
+</style>
+</head>
+<body>
+<header><div class="brand">✦ PETUALANGAN <span>PYTHAGORAS</span></div><div class="topscore">⭐ Poin: <b id="totalPoints">0</b></div></header>
+<div class="layout">
+<nav aria-label="Navigasi e-book">
+<h3>Daftar Isi</h3>
+<button class="active" data-page="cover">🏡 Beranda</button>
+<button data-page="tujuan">🎯 CP & TP</button>
+<button data-page="konsep">📐 Kenali Segitiga</button>
+<button data-page="rumus">✨ Rumus</button>
+<button data-page="contoh">🧩 Contoh Soal</button>
+<button data-page="tripel">🔢 Tripel</button>
+<button data-page="aplikasi">🌍 Dunia Nyata</button>
+<button data-page="latihan">✍️ Latihan</button>
+<button data-page="game">🏆 Challenge</button>
+<button data-page="evaluasi">📝 Evaluasi</button>
+<button data-page="ruang-penilaian">🎮 Ruang Penilaian</button>
+<button data-page="refleksi">🌱 Rangkuman</button>
+<div class="tiny">Pilih menu untuk berpindah bab.</div>
+</nav>
+<main>
+<section class="page active" id="cover">
+<div class="hero">
+<div class="eyebrow">E-book matematika interaktif • kelas VIII</div>
+<h1>Petualangan<br><span style="color:var(--blue)">Teorema Pythagoras</span></h1>
+<p class="lead">Jelajahi segitiga siku-siku, pecahkan teka-teki, kumpulkan poin, dan buktikan bahwa matematika ada di sekitar kita.</p>
+<svg class="diagram" viewBox="0 0 520 245" role="img" aria-label="Segitiga siku-siku dengan sisi a, b, dan c">
+<rect x="42" y="24" width="436" height="195" rx="18" fill="#ffffffaa"/>
+<path class="triangle" d="M110 190 L365 190 L110 55 Z" fill="#f6d46b55" stroke="#32708f" stroke-width="5" stroke-linejoin="round"/>
+<path d="M110 170 L130 170 L130 190" fill="none" stroke="#e88772" stroke-width="3"/>
+<text x="235" y="215" font-size="19" font-weight="bold" fill="#18344f">a</text><text x="84" y="125" font-size="19" font-weight="bold" fill="#18344f">b</text><text x="250" y="112" font-size="19" font-weight="bold" fill="#18344f" transform="rotate(28 250 112)">c</text>
+<g class="float"><circle cx="413" cy="65" r="26" fill="#dff2e6"/><text x="413" y="73" text-anchor="middle" font-size="25">✓</text></g>
+</svg>
+<div class="pill">📖 Materi ringkas</div><div class="pill">⚡ Kuis otomatis</div><div class="pill">🏅 Poin & tantangan</div>
+<div class="actions"><button class="primary" onclick="go('tujuan')">Mulai petualangan →</button><button class="secondary" onclick="go('evaluasi')">Langsung ke evaluasi</button></div>
+</div>
+<div class="grid2" style="margin-top:18px"><div class="card blue"><h3>🎒 Yang akan kamu pelajari</h3><p>Mengenali sisi segitiga, memilih rumus, menemukan panjang sisi, dan menggunakan Pythagoras dalam situasi nyata.</p></div><div class="card green"><h3>🎮 Cara bermain</h3><p>Baca materi, coba latihan, kumpulkan poin dari kuis, lalu selesaikan evaluasi akhir.</p></div></div>
+</section>
+
+<section class="page" id="tujuan">
+<div class="eyebrow">Bab 1 • Persiapan</div><h2>Tujuan Pembelajaran</h2>
+<div class="card blue"><h3>Capaian Pembelajaran (CP)</h3><p>E-book ini mendukung pembelajaran Matematika Fase D, elemen Geometri: peserta didik mempelajari hubungan panjang sisi segitiga siku-siku melalui Teorema Pythagoras dan menggunakannya untuk menyelesaikan masalah matematis maupun kontekstual.</p><p class="small">Catatan: rumusan ini berupa ringkasan untuk e-book. Cocokkan dengan dokumen CP resmi dan arahan dosen/guru yang digunakan.</p></div>
+<h3>Tujuan Pembelajaran (TP)</h3><ol><li>Mengidentifikasi sisi miring dan sisi siku-siku.</li><li>Menjelaskan hubungan kuadrat panjang sisi dalam Teorema Pythagoras.</li><li>Menentukan panjang sisi yang belum diketahui.</li><li>Memeriksa tripel Pythagoras.</li><li>Menyelesaikan masalah kontekstual.</li><li>Menjelaskan langkah dan memeriksa kewajaran jawaban.</li></ol>
+<div class="callout"><b>Asesmen diagnostik</b><br>Jawab lisan atau di buku catatan: (1) Berapa 6²? (2) Berapa √49? (3) Berapa besar sudut siku-siku? (4) Sebutkan benda yang membentuk segitiga siku-siku.</div>
+<div class="actions"><button class="primary" onclick="go('konsep')">Lanjut: Kenali segitiga →</button></div>
+</section>
+
+<section class="page" id="konsep">
+<div class="eyebrow">Bab 2 • Fondasi</div><h2>Kenali Segitiga Siku-Siku</h2><p>Segitiga siku-siku memiliki satu sudut sebesar <b>90°</b>. Teorema Pythagoras berlaku pada segitiga jenis ini.</p>
+<svg class="diagram" viewBox="0 0 500 280" aria-label="Diagram segitiga siku-siku"><path class="triangle" d="M95 220 L390 220 L95 55 Z" fill="#e9f5f8" stroke="#32708f" stroke-width="5" stroke-linejoin="round"/><path d="M95 195 L120 195 L120 220" fill="none" stroke="#e88772" stroke-width="4"/><text x="238" y="252" font-size="20" fill="#18344f" font-weight="bold">a (alas)</text><text x="30" y="145" font-size="20" fill="#18344f" font-weight="bold">b</text><text x="260" y="118" font-size="20" fill="#18344f" font-weight="bold" transform="rotate(29 260 118)">c (miring)</text><text x="130" y="188" font-size="14" fill="#e88772">90°</text></svg>
+<div class="grid2"><div class="card"><h3>↔ Sisi siku-siku</h3><p>Dua sisi yang bertemu membentuk sudut 90°. Di gambar adalah <b>a</b> dan <b>b</b>.</p></div><div class="card blue"><h3>斜 Sisi miring (hipotenusa)</h3><p>Sisi di hadapan sudut 90°. Di gambar adalah <b>c</b> dan selalu menjadi sisi terpanjang.</p></div></div>
+<div class="callout"><b>Cek cepat:</b> Pada segitiga bersisi 5 cm, 12 cm, dan 13 cm, sisi miringnya 13 cm karena merupakan sisi terpanjang dan 5² + 12² = 13².</div>
+<div class="actions"><button class="primary" onclick="go('rumus')">Pelajari rumus →</button></div>
+</section>
+
+<section class="page" id="rumus">
+<div class="card blue">
+  <h3>Memahami Rumus Pythagoras</h3>
+  <p>
+    Teorema Pythagoras digunakan untuk menentukan
+    panjang sisi segitiga siku-siku.
+  </p>
+  <div class="formula">a² + b² = c²</div>
+  <p>
+    a dan b adalah sisi siku-siku, sedangkan c adalah
+    sisi miring yang berada di depan sudut siku-siku.
+  </p>
+  <svg class="diagram" viewBox="0 0 420 270" role="img" aria-label="Ilustrasi segitiga siku-siku dengan sisi a, b, dan c">
+    <rect x="12" y="12" width="396" height="246" rx="18" fill="#ffffff"/>
+    <path d="M85 210 L335 210 L85 55 Z" fill="#f6d46b66" stroke="#32708f" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M85 185 L110 185 L110 210" fill="none" stroke="#e88772" stroke-width="4"/>
+    <text x="205" y="242" font-size="22" font-weight="bold" text-anchor="middle" fill="#18344f">a</text>
+    <text x="55" y="137" font-size="22" font-weight="bold" text-anchor="middle" fill="#18344f">b</text>
+    <text x="230" y="118" font-size="22" font-weight="bold" fill="#18344f" transform="rotate(32 230 118)">c (sisi miring)</text>
+    <text x="119" y="181" font-size="14" font-weight="bold" fill="#e88772">90°</text>
+  </svg>
+  <p class="small" style="text-align:center">Perhatikan: sisi c berada di depan sudut 90° dan merupakan sisi terpanjang.</p>
+</div>
+
+<div class="card green" style="margin-top:15px">
+  <h3>Contoh Perhitungan</h3>
+  <p>Diketahui a = 3 cm dan b = 4 cm.</p>
+  <div class="formula">c² = 3² + 4²</div>
+  <div class="formula">c² = 9 + 16 = 25</div>
+  <div class="formula">c = √25 = 5 cm</div>
+  <p>Jadi, panjang sisi miring adalah 5 cm.</p>
+</div>
+
+<div class="eyebrow">Bab 3 • Rumus utama</div><h2>Rahasia Teorema Pythagoras</h2><p>Jumlah kuadrat panjang kedua sisi siku-siku sama dengan kuadrat panjang sisi miring.</p>
+<div class="formula">a² + b² = c²</div>
+<svg class="diagram" viewBox="0 0 520 240" aria-label="Tiga persegi pada sisi segitiga"><path d="M60 185 L275 185 L60 65 Z" fill="#f6d46b66" stroke="#32708f" stroke-width="4"/><rect x="60" y="185" width="120" height="40" fill="#e9f5f8" stroke="#32708f" stroke-width="2" transform="translate(0,-40)"/><rect x="20" y="65" width="40" height="120" fill="#dff2e6" stroke="#32708f" stroke-width="2"/><text x="112" y="168" font-size="17" fill="#18344f" font-weight="bold">a²</text><text x="28" y="127" font-size="17" fill="#18344f" font-weight="bold">b²</text><text x="320" y="80" font-size="19" fill="#18344f" font-weight="bold">a² + b² = c²</text><text x="320" y="111" font-size="14" fill="#607584">Jumlah luas dua persegi</text><text x="320" y="132" font-size="14" fill="#607584">pada sisi siku-siku sama</text><text x="320" y="153" font-size="14" fill="#607584">dengan luas persegi pada</text><text x="320" y="174" font-size="14" fill="#607584">sisi miring.</text></svg>
+<div class="grid2"><div class="card blue"><h3>Jika mencari sisi miring</h3><div class="formula">c = √(a² + b²)</div></div><div class="card"><h3>Jika mencari sisi siku-siku</h3><div class="formula" style="font-size:1.25rem">a = √(c² − b²)<br>b = √(c² − a²)</div></div></div>
+<h3>Langkah menyelesaikan soal</h3><ol><li>Tulis yang diketahui dan ditanyakan.</li><li>Pastikan segitiganya siku-siku.</li><li>Pilih rumus sesuai sisi yang dicari.</li><li>Substitusikan angka dan hitung.</li><li>Tulis satuan serta periksa jawaban.</li></ol>
+<div class="actions"><button class="primary" onclick="go('contoh')">Lihat contoh soal →</button></div>
+</section>
+
+<section class="page" id="contoh">
+<div class="eyebrow">Bab 4 • Belajar dari contoh</div><h2>Contoh Soal dan Pembahasan</h2>
+<div class="card blue"><h3>Contoh 1 — Mencari sisi miring</h3><p>Segitiga siku-siku memiliki sisi siku-siku 6 cm dan 8 cm. Tentukan sisi miringnya.</p><p><b>Diketahui:</b> a = 6 cm, b = 8 cm<br><b>Ditanyakan:</b> c = ?</p><div class="formula">c² = 6² + 8² = 36 + 64 = 100<br>c = √100 = 10 cm</div><p><b>Jawaban:</b> panjang sisi miring adalah 10 cm.</p></div>
+<div class="card" style="margin-top:15px"><h3>Contoh 2 — Mencari sisi siku-siku</h3><p>Sisi miring 13 cm dan salah satu sisi siku-siku 5 cm. Tentukan sisi lainnya.</p><div class="formula">b² = 13² − 5² = 169 − 25 = 144<br>b = √144 = 12 cm</div><p><b>Jawaban:</b> sisi lainnya adalah 12 cm.</p></div>
+<div class="card green" style="margin-top:15px"><h3>Contoh 3 — Periksa segitiga</h3><p>Apakah 8, 15, dan 17 membentuk segitiga siku-siku?</p><p>8² + 15² = 64 + 225 = 289 dan 17² = 289. Hasilnya sama, jadi <b>ya, segitiga tersebut siku-siku</b>.</p></div>
+<div class="actions"><button class="primary" onclick="go('tripel')">Lanjut: Tripel Pythagoras →</button></div>
+</section>
+
+<section class="page" id="tripel">
+<div class="eyebrow">Bab 5 • Pola bilangan</div><h2>Tripel Pythagoras</h2><p>Tripel Pythagoras adalah tiga bilangan bulat positif yang memenuhi a² + b² = c². Biasanya c adalah bilangan terbesar.</p>
+<div class="grid2"><div class="card blue"><h3>3, 4, 5</h3><p>3² + 4² = 9 + 16 = 25 = 5²</p></div><div class="card green"><h3>5, 12, 13</h3><p>5² + 12² = 25 + 144 = 169 = 13²</p></div><div class="card"><h3>8, 15, 17</h3><p>8² + 15² = 64 + 225 = 289 = 17²</p></div><div class="card"><h3>7, 24, 25</h3><p>7² + 24² = 49 + 576 = 625 = 25²</p></div></div>
+<h3>Langkah memeriksa</h3><ol><li>Urutkan bilangan dari yang terkecil ke terbesar.</li><li>Jumlahkan kuadrat dua bilangan terkecil.</li><li>Bandingkan dengan kuadrat bilangan terbesar.</li><li>Jika sama, maka bilangan tersebut merupakan tripel Pythagoras.</li></ol>
+<div class="callout"><b>Coba di kepala:</b> Apakah 6, 8, 11 merupakan tripel Pythagoras? (Jawaban: bukan, sebab 6² + 8² = 100 sedangkan 11² = 121.)</div>
+<div class="actions"><button class="primary" onclick="go('aplikasi')">Lihat penerapan →</button></div>
+</section>
+
+<section class="page" id="aplikasi">
+<div class="eyebrow">Bab 6 • Matematika di sekitar kita</div><h2>Pythagoras di Dunia Nyata</h2><p>Jika suatu situasi membentuk segitiga siku-siku, Teorema Pythagoras dapat membantu menentukan jarak yang sulit diukur secara langsung.</p>
+<svg class="diagram" viewBox="0 0 520 275" aria-label="Tangga bersandar pada dinding"><line x1="65" y1="225" x2="440" y2="225" stroke="#a7c2cf" stroke-width="5"/><line x1="380" y1="225" x2="380" y2="35" stroke="#a7c2cf" stroke-width="5"/><line class="triangle" x1="155" y1="225" x2="380" y2="55" stroke="#e88772" stroke-width="7" stroke-linecap="round"/><path d="M355 225 L355 200 L380 200" fill="none" stroke="#32708f" stroke-width="3"/><text x="235" y="255" font-size="17" fill="#18344f">5 m</text><text x="392" y="145" font-size="17" fill="#18344f">tinggi?</text><text x="230" y="115" font-size="17" fill="#18344f" transform="rotate(-37 230 115)">tangga 13 m</text><circle class="float" cx="102" cy="58" r="22" fill="#f6d46b"/><text x="102" y="66" text-anchor="middle" font-size="23">💡</text></svg>
+<div class="card blue"><h3>Contoh: tangga di dinding</h3><p>Tangga 13 m bersandar pada dinding. Kaki tangga berjarak 5 m dari dinding. Berapa tinggi ujung tangga?</p><div class="formula">tinggi² = 13² − 5² = 169 − 25 = 144<br>tinggi = √144 = 12 m</div><p>Jadi, ujung tangga mencapai ketinggian 12 m.</p></div>
+<h3>Contoh penggunaan lain</h3><ul><li>Menentukan diagonal layar atau lapangan persegi panjang.</li><li>Menghitung jarak terpendek antara dua titik.</li><li>Memeriksa sudut siku-siku pada rancangan bangunan.</li></ul>
+<div class="actions"><button class="primary" onclick="go('latihan')">Mulai latihan →</button></div>
+</section>
+
+<section class="page" id="latihan">
+<div class="eyebrow">Bab 7 • Latihan mandiri</div><h2>Latihan Interaktif</h2><p>Pilih satu jawaban. Setiap jawaban benar memperoleh <b>10 poin</b>. Pembahasan muncul setelah kamu menjawab.</p>
+<div class="progress"><div id="practiceProgress"></div></div><div id="practiceArea"></div><div class="feedback" id="practiceFeedback" role="status"></div>
+<div class="actions"><button class="primary" id="practiceNext" onclick="nextPractice()" style="display:none">Soal berikutnya →</button><button class="secondary" onclick="resetPractice()">Ulangi latihan</button></div>
+</section>
+
+<section class="page" id="game">
+<div class="eyebrow">Bab 8 • Kumpulkan poin</div><h2>Pythagoras Challenge 🏆</h2><p>Benar atau salah? Pilih jawaban dan dapatkan 15 poin untuk setiap jawaban benar. Selesaikan semua tantangan untuk membuka lencana <b>Penjelajah Pythagoras</b>.</p>
+<div class="progress"><div id="gameProgress"></div></div><div id="gameArea"></div><div class="feedback" id="gameFeedback" role="status"></div>
+<div class="actions"><button class="primary" id="gameNext" onclick="nextGame()" style="display:none">Tantangan berikutnya →</button><button class="secondary" onclick="resetGame()">Mulai ulang challenge</button></div>
+<div id="badgeArea"></div>
+</section>
+
+<section class="page" id="evaluasi">
+<div class="eyebrow">Bab 9 • Asesmen sumatif</div><h2>Evaluasi Akhir</h2><p>Kerjakan 5 soal berikut secara mandiri. Setiap jawaban benar mendapat 20 poin. Skor akhir ditampilkan setelah semua soal dijawab.</p>
+<div class="progress"><div id="evalProgress"></div></div><div id="evalArea"></div><div class="feedback" id="evalFeedback" role="status"></div>
+<div class="actions"><button class="primary" id="evalNext" onclick="nextEval()" style="display:none">Soal berikutnya →</button><button class="secondary" onclick="resetEval()">Ulangi evaluasi</button></div>
+<div id="evalResult"></div>
+</section>
+
+<section class="page" id="ruang-penilaian">
+<div class="eyebrow">Ruang khusus • Penilaian</div><h2>Ruang Penilaian 🎮</h2>
+<p class="lead">Pilih ruang sesuai kegiatan penilaian. Setiap tombol akan membuka media penilaian yang sudah disiapkan.</p>
+<div class="card blue" style="margin-top:16px">
+  <h3>🚪 Room 1 — Cek Pemahaman</h3><p>Kerjakan 10 soal untuk mengecek pemahaman dasar tentang sisi miring, rumus Pythagoras, dan penerapannya. Skor dihitung otomatis dan tersedia pembahasan.</p>
+  <div class="actions"><a class="primary" href="Tes_Pemahaman_Pythagoras.html" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;padding:12px 17px;border-radius:12px;font-weight:800;color:white">Mulai Cek Pemahaman ↗</a></div>
+</div>
+<div class="card green" style="margin-top:16px">
+  <h3>🧩 Room 2 — Tantangan Pythagoras</h3><p>Masuk ke game Pythagoras Quest, kumpulkan poin, selesaikan 3 level, dan raih gelar petualang matematika.</p>
+  <div class="actions"><a class="primary" href="Pythagoras_Quest_Penilaian.html" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;padding:12px 17px;border-radius:12px;font-weight:800;color:white">Mulai Tantangan ↗</a></div>
+</div>
+<div class="card" style="margin-top:16px">
+  <h3>🏆 Room 3 — Evaluasi Akhir</h3><p>Kerjakan evaluasi akhir yang terdiri dari 20 soal pilihan ganda. Setiap soal bernilai 5 poin, dengan nilai maksimal 100, serta dilengkapi kunci dan pembahasan.</p>
+  <div class="actions"><a class="primary" href="Evaluasi_Akhir_Pythagoras_20_Soal.html" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;padding:12px 17px;border-radius:12px;font-weight:800;color:white">Kerjakan Evaluasi Akhir ↗</a></div>
+</div>
+<div class="callout"><b>Petunjuk untuk pengelola:</b> Simpan file e-book dan ketiga file penilaian dalam satu folder dengan nama file seperti yang tercantum pada tombol. Saat mengunggah ke Netlify, unggah semuanya bersama-sama agar setiap tombol dapat membuka penilaian yang sesuai.</div>
+<div class="actions"><button class="secondary" onclick="go('refleksi')">Lanjut ke rangkuman →</button></div>
+</section>
+
+<section class="page" id="refleksi">
+<div class="eyebrow">Bab 10 • Tutup petualangan</div><h2>Rangkuman dan Refleksi</h2>
+<div class="formula">a² + b² = c²</div>
+<ul><li>Teorema Pythagoras berlaku pada segitiga siku-siku.</li><li>Sisi miring berhadapan dengan sudut 90° dan merupakan sisi terpanjang.</li><li>Mencari sisi miring: c = √(a² + b²).</li><li>Mencari sisi siku-siku: a = √(c² − b²) atau b = √(c² − a²).</li><li>Tripel Pythagoras memenuhi hubungan a² + b² = c².</li><li>Dalam soal cerita, gambar situasi dan tandai sisi yang diketahui.</li></ul>
+<h3>Refleksi diri</h3>
+<div class="card">
+<label class="checkrow"><input type="checkbox"> Saya dapat mengenali sisi miring dan sisi siku-siku.</label>
+<label class="checkrow"><input type="checkbox"> Saya dapat memilih rumus yang tepat.</label>
+<label class="checkrow"><input type="checkbox"> Saya dapat menyelesaikan soal cerita.</label>
+<label class="checkrow"><input type="checkbox"> Saya sudah memeriksa jawaban pada evaluasi akhir.</label>
+<label for="reflection">Hal yang paling saya pahami / masih membingungkan:</label><input id="reflection" type="text" placeholder="Tulis refleksimu di sini..."><p class="small">Refleksi ini untuk catatan pribadi. Tidak ada tombol kirim karena jawaban tidak dikumpulkan atau dikirim ke guru.</p>
+</div>
+<div class="card blue" style="margin-top:16px"><h3>🔑 Kunci Jawaban & Pembahasan</h3><p><b>Latihan:</b> 1) 15 cm (9² + 12² = 225); 2) 8 cm (10² − 6² = 64); 3) 6, 8, 10; 4) 25 cm (7² + 24² = 625); 5) 20 cm (25² − 15² = 400); 6) 15 m (9² + 12² = 225); 7) 8 m (10² − 6² = 64); 8) bukan tripel karena 9² + 12² = 225, sedangkan 16² = 256; 9) 17 m (8² + 15² = 289).</p><p><b>Challenge:</b> 1) Benar; 2) Benar; 3) Benar; 4) Benar; 5) Salah — Teorema Pythagoras berlaku untuk segitiga siku-siku.</p><p><b>Evaluasi:</b> 1) B; 2) C; 3) C; 4) B; 5) C. Pembahasan tiap soal muncul setelah dijawab.</p></div>
+<h3>Daftar Pustaka</h3><p class="small">Gunakan dokumen Capaian Pembelajaran Matematika Fase D yang berlaku dan buku teks Matematika kelas VIII yang ditetapkan sekolah. Lengkapi identitas bibliografi serta sumber ilustrasi sesuai referensi yang benar-benar digunakan.</p>
+<div class="actions"><button class="primary" onclick="window.print()">Cetak / Simpan PDF</button><button class="secondary" onclick="go('cover')">Kembali ke beranda ↑</button></div>
+</section>
+</main>
+</div>
+<footer>Media pembelajaran digital • Teorema Pythagoras • Untuk SMP/MTs kelas VIII. Skor tersimpan selama halaman ini tetap terbuka.</footer>
+<script>
+const pages=[...document.querySelectorAll('.page')];
+const navButtons=[...document.querySelectorAll('nav button[data-page]')];
+function go(id){pages.forEach(p=>p.classList.toggle('active',p.id===id));navButtons.forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'});}
+navButtons.forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+let points=0;
+function addPoints(n){points+=n;document.getElementById('totalPoints').textContent=points;}
+const practice=[
+{q:"Segitiga siku-siku memiliki sisi 9 cm dan 12 cm. Sisi miringnya adalah ...",opts:["13 cm","15 cm","18 cm","21 cm"],a:1,why:"c² = 9² + 12² = 81 + 144 = 225, jadi c = 15 cm."},
+{q:"Sisi miring 10 cm dan satu sisi siku-siku 6 cm. Sisi lainnya adalah ...",opts:["4 cm","6 cm","8 cm","16 cm"],a:2,why:"b² = 10² − 6² = 100 − 36 = 64, jadi b = 8 cm."},
+{q:"Manakah yang merupakan tripel Pythagoras?",opts:["4, 6, 8","5, 10, 12","6, 8, 10","7, 8, 9"],a:2,why:"6² + 8² = 36 + 64 = 100 = 10²."},
+{q:"Sisi siku-siku 7 cm dan 24 cm. Sisi miringnya adalah ...",opts:["17 cm","24 cm","25 cm","31 cm"],a:2,why:"7² + 24² = 49 + 576 = 625, sehingga c = 25 cm."},
+{q:"Diagonal persegi panjang dengan panjang 9 m dan lebar 12 m adalah ...",opts:["13 m","15 m","18 m","21 m"],a:1,why:"Diagonal² = 9² + 12² = 225, jadi diagonal = 15 m."}
+];
+const game=[
+{q:"Jika a = 3 dan b = 4, maka c = 5.",opts:["Benar","Salah"],a:0,why:"Benar. 3² + 4² = 9 + 16 = 25 = 5²."},
+{q:"Sisi miring berhadapan dengan sudut 90°.",opts:["Benar","Salah"],a:0,why:"Benar. Sisi di depan sudut siku-siku adalah sisi miring."},
+{q:"Bilangan 5, 12, 13 merupakan tripel Pythagoras.",opts:["Benar","Salah"],a:0,why:"Benar. 25 + 144 = 169."},
+{q:"Jika sisi miring 10 cm dan satu sisi siku-siku 8 cm, sisi lainnya 6 cm.",opts:["Benar","Salah"],a:0,why:"Benar. √(10² − 8²) = √36 = 6 cm."},
+{q:"Teorema Pythagoras berlaku pada semua segitiga, termasuk segitiga tumpul.",opts:["Benar","Salah"],a:1,why:"Salah. Teorema ini berlaku untuk segitiga siku-siku."}
+];
+const evaluation=[
+{q:"Rumus Teorema Pythagoras yang benar adalah ...",opts:["a + b = c","a² + b² = c²","a² − b² = c²","a × b = c²"],a:1,why:"Pada segitiga siku-siku, jumlah kuadrat sisi siku-siku sama dengan kuadrat sisi miring."},
+{q:"Sisi siku-siku 10 cm dan 24 cm. Sisi miringnya adalah ...",opts:["25 cm","24 cm","26 cm","34 cm"],a:2,why:"10² + 24² = 100 + 576 = 676; √676 = 26 cm."},
+{q:"Sisi miring 20 cm dan satu sisi siku-siku 12 cm. Sisi lainnya adalah ...",opts:["8 cm","12 cm","16 cm","18 cm"],a:2,why:"√(20² − 12²) = √(400 − 144) = √256 = 16 cm."},
+{q:"Diagonal persegi panjang dengan panjang 16 cm dan lebar 12 cm adalah ...",opts:["18 cm","20 cm","24 cm","28 cm"],a:1,why:"√(16² + 12²) = √(256 + 144) = √400 = 20 cm."},
+{q:"Sebuah tangga 13 m bersandar pada dinding. Jarak kaki tangga ke dinding 5 m. Tingginya adalah ...",opts:["5 m","8 m","12 m","18 m"],a:2,why:"√(13² − 5²) = √(169 − 25) = √144 = 12 m."}
+];
+let pIndex=0,gIndex=0,eIndex=0,pAnswered=false,gAnswered=false,eAnswered=false,pCorrect=0,gCorrect=0,eCorrect=0;
+function renderQuiz(kind,data,index,areaId,feedbackId,nextId,progressId,score){
+ const area=document.getElementById(areaId),fb=document.getElementById(feedbackId),next=document.getElementById(nextId),prog=document.getElementById(progressId);
+ const item=data[index];if(!item)return;
+ prog.style.width=((index)/data.length*100)+'%';fb.className='feedback';fb.textContent='';next.style.display='none';
+ area.innerHTML=`<div class="card"><div class="small">Soal ${index+1} dari ${data.length}</div><h3>${item.q}</h3><div id="${kind}opts"></div></div>`;
+ const opts=document.getElementById(kind+'opts');
+ item.opts.forEach((o,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=String.fromCharCode(65+i)+'. '+o;b.onclick=()=>answerQuiz(kind,i,item,b,opts,fb,next,data.length,index,score);opts.appendChild(b)});
+}
+function answerQuiz(kind,choice,item,btn,opts,fb,next,total,index,score){
+ if(btn.dataset.done)return;[...opts.children].forEach(b=>b.disabled=true);btn.dataset.done='1';
+ const correct=choice===item.a;
+ [...opts.children].forEach((b,i)=>{if(i===item.a)b.classList.add('correct');else if(i===choice)b.classList.add('wrong')});
+ fb.innerHTML=(correct?'✅ <b>Benar!</b> ':'💡 <b>Belum tepat.</b> ')+item.why;fb.className='feedback show';
+ if(correct){addPoints(score);if(kind==='practice')pCorrect++;if(kind==='game')gCorrect++;if(kind==='eval')eCorrect++}
+ next.style.display='inline-block';
+ if(index===total-1)next.textContent=kind==='eval'?'Lihat hasil akhir →':kind==='game'?'Lihat lencana →':'Selesai latihan →';
+ document.getElementById(kind==='practice'?'practiceProgress':kind==='game'?'gameProgress':'evalProgress').style.width=((index+1)/total*100)+'%';
+}
+function nextPractice(){if(pIndex<practice.length-1){pIndex++;renderQuiz('practice',practice,pIndex,'practiceArea','practiceFeedback','practiceNext','practiceProgress',10)}else{document.getElementById('practiceArea').innerHTML=`<div class="card green"><h3>Latihan selesai!</h3><p>Jawaban benar: ${pCorrect} dari ${practice.length}.</p><p>Kamu mendapat ${pCorrect*10} poin dari latihan ini.</p></div>`;document.getElementById('practiceNext').style.display='none';document.getElementById('practiceProgress').style.width='100%';}}
+function resetPractice(){pIndex=0;pCorrect=0;renderQuiz('practice',practice,pIndex,'practiceArea','practiceFeedback','practiceNext','practiceProgress',10)}
+function nextGame(){if(gIndex<game.length-1){gIndex++;renderQuiz('game',game,gIndex,'gameArea','gameFeedback','gameNext','gameProgress',15)}else{document.getElementById('gameArea').innerHTML=`<div class="card green"><div class="score-big">🏆</div><h3>Challenge selesai!</h3><p>Jawaban benar: ${gCorrect} dari ${game.length}.</p>${gCorrect===game.length?'<p><b>Lencana Penjelajah Pythagoras terbuka!</b></p>':'<p>Coba ulangi untuk meningkatkan hasilmu.</p>'}</div>`;document.getElementById('gameNext').style.display='none';document.getElementById('gameProgress').style.width='100%';document.getElementById('badgeArea').innerHTML=gCorrect===game.length?'<div class="callout">🏅 <b>Lencana Penjelajah Pythagoras</b> — semua tantangan dijawab benar!</div>':'';}}
+function resetGame(){gIndex=0;gCorrect=0;document.getElementById('badgeArea').innerHTML='';renderQuiz('game',game,gIndex,'gameArea','gameFeedback','gameNext','gameProgress',15)}
+function nextEval(){
+  if(eIndex<evaluation.length-1){
+    eIndex++;
+    renderQuiz('eval',evaluation,eIndex,'evalArea','evalFeedback','evalNext','evalProgress',20);
+  } else {
+    document.getElementById('evalArea').innerHTML =
+      `<div class="card blue">
+        <div class="score-big">${eCorrect*20}/100</div>
+        <h3>${eCorrect>=4?'Hebat! Tujuan belajar hampir/sepenuhnya tercapai.':eCorrect>=3?'Bagus, terus berlatih!':'Ayo pelajari kembali materi dan coba lagi.'}</h3>
+        <p>Jawaban benar: ${eCorrect} dari ${evaluation.length}.</p>
+        <p>Skor ini merupakan umpan balik belajar, bukan nilai resmi sekolah.</p>
+      </div>`;
+    document.getElementById('evalNext').style.display='none';
+    document.getElementById('evalProgress').style.width='100%';
+    document.getElementById('evalResult').innerHTML =
+      '<div class="actions"><button class="primary" id="openRefleksi">Buka rangkuman &amp; kunci jawaban →</button></div>';
+    document.getElementById('openRefleksi').onclick = function(){ go('refleksi'); };
+  }
+}
+function resetEval(){eIndex=0;eCorrect=0;document.getElementById('evalResult').innerHTML='';renderQuiz('eval',evaluation,eIndex,'evalArea','evalFeedback','evalNext','evalProgress',20)}
+function openAssessment(inputId){
+  const field=document.getElementById(inputId);
+  const link=field.value.trim();
+  if(!link){alert('Tempel tautan penilaian terlebih dahulu.');field.focus();return;}
+  try{const url=new URL(link);if(url.protocol!=='http:'&&url.protocol!=='https:'){throw new Error('Tautan harus menggunakan http atau https.');}window.open(url.href,'_blank','noopener');}
+  catch(e){alert('Tautan belum valid. Pastikan diawali https:// atau http://');field.focus();}
+}
+resetPractice();resetGame();resetEval();
+</script>
+</body>
+</html>
